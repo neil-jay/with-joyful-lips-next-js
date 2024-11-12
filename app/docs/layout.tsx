@@ -121,6 +121,26 @@ export default function DocsLayout({
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    const targetId = href.replace('#', '')
+    const targetElement = document.getElementById(targetId)
+    if (targetElement) {
+      const headerOffset = 80 // Adjust this value based on your header height
+      const elementPosition = targetElement.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+
+      // Set focus to the target element for accessibility
+      targetElement.tabIndex = -1
+      targetElement.focus({ preventScroll: true })
+    }
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -177,6 +197,7 @@ export default function DocsLayout({
                 <a
                   key={item.url}
                   href={item.url}
+                  onClick={(e) => handleSmoothScroll(e, item.url)}
                   className={`block text-sm transition-colors hover:text-foreground ${
                     activeItem === item.url.slice(1)
                       ? 'text-foreground font-medium'

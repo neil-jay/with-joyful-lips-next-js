@@ -1,12 +1,12 @@
 export default function VersesPage() {
   return (
-    <div className="space-y-8">
-      <h1 className="text-4xl font-bold">Verses in Songwriting</h1>
-      <p className="text-xl">
+    <div className="space-y-6 sm:space-y-8">
+      <h1 className="text-3xl sm:text-4xl font-bold">Verses in Songwriting</h1>
+      <p className="text-lg sm:text-xl">
         Verses are the building blocks of most songs, carrying the main narrative and setting the stage for the chorus. This guide will help you understand and master the art of writing effective verses.
       </p>
 
-      <h2 className="text-2xl font-semibold" id="what-youll-learn">What You'll Learn</h2>
+      <h2 id="what-youll-learn" className="text-2xl font-semibold">What You'll Learn</h2>
       <ul className="list-disc pl-6 space-y-2">
         <li>The fundamental structure and purpose of verses</li>
         <li>Techniques for writing compelling verse lyrics</li>
@@ -14,7 +14,7 @@ export default function VersesPage() {
         <li>Advanced methods to enhance your verse writing skills</li>
       </ul>
 
-      <h2 className="text-2xl font-semibold" id="verse-basics">Verse Basics</h2>
+      <h2 id="verse-basics" className="text-2xl font-semibold">Verse Basics</h2>
       <p>
         Verses are the storytelling sections of a song. They typically contain the bulk of the song's narrative, imagery, and detail. Here are some key characteristics of verses:
       </p>
@@ -25,7 +25,7 @@ export default function VersesPage() {
         <li>Typically lead into the chorus or refrain</li>
       </ul>
 
-      <h2 className="text-2xl font-semibold" id="verse-structure">Verse Structure</h2>
+      <h2 id="verse-structure" className="text-2xl font-semibold">Verse Structure</h2>
       <p>
         While verse structure can vary, a common format in popular music is:
       </p>
@@ -38,7 +38,7 @@ export default function VersesPage() {
         Remember, these are guidelines, not rules. Many great songs break from these conventions.
       </p>
 
-      <h2 className="text-2xl font-semibold" id="writing-techniques">Verse Writing Techniques</h2>
+      <h2 id="writing-techniques" className="text-2xl font-semibold">Verse Writing Techniques</h2>
       <p>
         Here are some techniques to help you write more effective verses:
       </p>
@@ -50,7 +50,7 @@ export default function VersesPage() {
         <li><strong>Develop your story:</strong> Each verse should advance the narrative or emotional journey of the song.</li>
       </ul>
 
-      <h2 className="text-2xl font-semibold" id="verse-chorus-relationship">Verse-Chorus Relationship</h2>
+      <h2 id="verse-chorus-relationship" className="text-2xl font-semibold">Verse-Chorus Relationship</h2>
       <p>
         The relationship between verses and choruses is crucial in songwriting. Here are some tips:
       </p>
@@ -61,7 +61,7 @@ export default function VersesPage() {
         <li>Consider using a pre-chorus to bridge the gap between verse and chorus if needed</li>
       </ul>
 
-      <h2 className="text-2xl font-semibold" id="advanced-techniques">Advanced Verse Writing Techniques</h2>
+      <h2 id="advanced-techniques" className="text-2xl font-semibold">Advanced Verse Writing Techniques</h2>
       <p>
         Once you've mastered the basics, try these advanced techniques:
       </p>
@@ -73,7 +73,7 @@ export default function VersesPage() {
         <li><strong>Experiment with perspective:</strong> Try writing verses from different points of view.</li>
       </ul>
 
-      <h2 className="text-2xl font-semibold" id="common-pitfalls">Common Verse Writing Pitfalls</h2>
+      <h2 id="common-pitfalls" className="text-2xl font-semibold">Common Verse Writing Pitfalls</h2>
       <p>
         Avoid these common mistakes when writing verses:
       </p>
@@ -85,7 +85,7 @@ export default function VersesPage() {
         <li>Making verses too similar to the chorus in energy or content</li>
       </ul>
 
-      <h2 className="text-2xl font-semibold" id="practice-exercises">Practice Exercises</h2>
+      <h2 id="practice-exercises" className="text-2xl font-semibold">Practice Exercises</h2>
       <p>
         Improve your verse writing skills with these exercises:
       </p>
