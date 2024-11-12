@@ -12,6 +12,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import Head from 'next/head'
+import Link from 'next/link'
 import Script from 'next/script'
 
 interface LyricSection {
@@ -119,6 +121,17 @@ export default function EntrancePage() {
 
   return (
     <>
+      <Head>
+        <title>Entrance Lyrics Examples | Lyric Writing Guide</title>
+        <meta name="description" content="Explore a collection of entrance-themed lyrics, showcasing various songwriting techniques and structures. Perfect for aspiring songwriters and music enthusiasts." />
+        <meta name="keywords" content="lyrics, songwriting, entrance, music, composition" />
+        <meta property="og:title" content="Entrance Lyrics Examples | Lyric Writing Guide" />
+        <meta property="og:description" content="Discover entrance-themed lyrics and songwriting techniques. Ideal for songwriters and music lovers." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yourdomain.com/docs/song-structure/entrance" />
+        <link rel="canonical" href="https://yourdomain.com/docs/song-structure/entrance" />
+      </Head>
+
       <Script id="lyrics-schema" type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",
@@ -129,7 +142,8 @@ export default function EntrancePage() {
             "item": {
               "@type": "CreativeWork",
               "name": lyric.title,
-              "genre": lyric.category
+              "genre": lyric.category,
+              "text": lyric.sections.map(section => section.content).join("\n")
             }
           }))
         })}
@@ -140,6 +154,16 @@ export default function EntrancePage() {
         <p className="text-lg text-muted-foreground">
           This page showcases examples of lyrics about entrances, demonstrating various techniques and structures in songwriting.
         </p>
+        
+        <nav aria-label="Breadcrumb">
+          <ol className="flex space-x-2 text-sm text-muted-foreground">
+            <li><Link href="/docs">Docs</Link></li>
+            <li>&gt;</li>
+            <li><Link href="/docs/song-structure">Song Structure</Link></li>
+            <li>&gt;</li>
+            <li aria-current="page">Entrance</li>
+          </ol>
+        </nav>
         
         <section aria-label="Lyric filters" className="w-full">
           <h2 className="sr-only">Lyric Filters</h2>
@@ -154,13 +178,13 @@ export default function EntrancePage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2" role="group" aria-label="Category filters">
               {categories.map(category => (
                 <Button
                   key={category}
                   variant={selectedCategory === category ? "default" : "outline"}
                   onClick={() => setSelectedCategory(category)}
-                  aria-label={`Filter by ${category}`}
+                  aria-pressed={selectedCategory === category}
                   className="flex-grow sm:flex-grow-0"
                 >
                   {category}
@@ -197,42 +221,47 @@ export default function EntrancePage() {
           </div>
         </section>
 
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious 
-                href="#" 
-                onClick={(e) => {
-                  e.preventDefault();
-                  setCurrentPage(prev => Math.max(prev - 1, 1));
-                }}
-              />
-            </PaginationItem>
-            {[...Array(pageCount)].map((_, i) => (
-              <PaginationItem key={i}>
-                <PaginationLink 
+        <nav aria-label="Pagination">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious 
                   href="#" 
                   onClick={(e) => {
                     e.preventDefault();
-                    setCurrentPage(i + 1);
+                    setCurrentPage(prev => Math.max(prev - 1, 1));
                   }}
-                  isActive={currentPage === i + 1}
-                >
-                  {i + 1}
-                </PaginationLink>
+                  aria-disabled={currentPage === 1}
+                />
               </PaginationItem>
-            ))}
-            <PaginationItem>
-              <PaginationNext 
-                href="#" 
-                onClick={(e) => {
-                  e.preventDefault();
-                  setCurrentPage(prev => Math.min(prev + 1, pageCount));
-                }}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+              {[...Array(pageCount)].map((_, i) => (
+                <PaginationItem key={i}>
+                  <PaginationLink 
+                    href="#" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentPage(i + 1);
+                    }}
+                    isActive={currentPage === i + 1}
+                    aria-current={currentPage === i + 1 ? "page" : undefined}
+                  >
+                    {i + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+              <PaginationItem>
+                <PaginationNext 
+                  href="#" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage(prev => Math.min(prev + 1, pageCount));
+                  }}
+                  aria-disabled={currentPage === pageCount}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </nav>
       </main>
     </>
   )
