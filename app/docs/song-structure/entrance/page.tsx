@@ -7,7 +7,6 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -175,23 +174,25 @@ export default function EntrancePage() {
           <h2 className="sr-only">Lyrics Collection</h2>
           <div className="grid gap-6 md:grid-cols-2">
             {paginatedLyrics.map((lyric) => (
-              <Card key={lyric.id}>
-                <CardHeader>
-                  <h2 id={`song-${lyric.id}`} className="text-2xl font-semibold">{lyric.title}</h2>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {lyric.sections.map((section, index) => (
-                      <div key={index}>
-                        <h3 className="text-lg font-semibold capitalize">{section.type}</h3>
-                        <p className={`whitespace-pre-line ${section.type === 'chorus' ? 'italic' : ''}`}>
-                          {section.content}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              <article key={lyric.id} className="rounded-lg border bg-card text-card-foreground shadow-sm">
+                <Card>
+                  <CardHeader>
+                    <h2 id={`song-${lyric.id}`} className="text-2xl font-semibold">{lyric.title}</h2>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {lyric.sections.map((section, index) => (
+                        <div key={index}>
+                          <h3 className="text-lg font-semibold capitalize">{section.type}</h3>
+                          <p className={`whitespace-pre-line ${section.type === 'chorus' ? 'italic' : ''}`}>
+                            {section.content}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </article>
             ))}
           </div>
         </section>
