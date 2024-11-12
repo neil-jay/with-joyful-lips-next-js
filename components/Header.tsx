@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { Music } from 'lucide-react'
+import { Music, Search } from 'lucide-react'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { Input } from "@/components/ui/input"
 
 export function Header() {
   return (
@@ -10,6 +11,14 @@ export function Header() {
           <Music className="h-6 w-6" />
           <span className="font-bold hidden sm:inline-block">Lyrics Docs</span>
         </Link>
+        <div className="flex-1 mx-4 max-w-md relative">
+          <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Search documentation..."
+            className="w-full pl-8"
+          />
+        </div>
         <ThemeToggle />
       </div>
     </header>

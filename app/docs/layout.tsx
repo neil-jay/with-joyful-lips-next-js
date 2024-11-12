@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
@@ -128,14 +127,6 @@ export default function DocsLayout({
       <div className="flex flex-1">
         <aside className={`${sidebarOpen ? 'block' : 'hidden'} md:block fixed md:sticky top-14 z-30 h-[calc(100vh-3.5rem)] w-64 overflow-y-auto border-r bg-background transition-all duration-300`}>
           <div className="p-4">
-            <div className="relative mb-4">
-              <span className="absolute left-2.5 top-2.5 text-muted-foreground">🔍</span>
-              <Input
-                type="search"
-                placeholder="Search documentation..."
-                className="w-full pl-8"
-              />
-            </div>
             <nav className="space-y-4">
               {sidebarItems.map((group, index) => (
                 <div key={index} className="space-y-2">
