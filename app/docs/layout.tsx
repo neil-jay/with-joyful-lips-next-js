@@ -154,7 +154,7 @@ export default function DocsLayout({
           </div>
         </aside>
         <main className="flex-1 overflow-y-auto">
-          <div className="container py-6 lg:py-10 pl-6">
+          <div className="container py-6 lg:py-10 px-4 sm:px-6">
             {isMobile && (
               <Button
                 onClick={toggleSidebar}
