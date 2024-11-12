@@ -47,6 +47,46 @@ const sidebarItems = [
   },
 ]
 
+interface TableOfContentsItem {
+  title: string
+  url: string
+}
+
+function useActiveItem(itemIds: string[]) {
+  const [activeId, setActiveId] = useState<string>('')
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id)
+          }
+        })
+      },
+      { rootMargin: '-10% 0% -85% 0%' }
+    )
+
+    itemIds.forEach((id) => {
+      const element = document.getElementById(id)
+      if (element) {
+        observer.observe(element)
+      }
+    })
+
+    return () => {
+      itemIds.forEach((id) => {
+        const element = document.getElementById(id)
+        if (element) {
+          observer.unobserve(element)
+        }
+      })
+    }
+  }, [itemIds])
+
+  return activeId
+}
+
 export default function DocsLayout({
   children,
 }: {
@@ -55,6 +95,18 @@ export default function DocsLayout({
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([])
+
+  useEffect(() => {
+    const headings = document.querySelectorAll('h2')
+    const items: TableOfContentsItem[] = Array.from(headings).map((heading) => ({
+      title: heading.textContent || '',
+      url: `#${heading.id}`,
+    }))
+    setTableOfContents(items)
+  }, [pathname])
+
+  const activeItem = useActiveItem(tableOfContents.map((item) => item.url.slice(1)))
 
   useEffect(() => {
     const checkMobile = () => {
@@ -126,6 +178,26 @@ export default function DocsLayout({
             {children}
           </div>
         </main>
+        <div className="hidden xl:block w-64 shrink-0">
+          <div className="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-6 pl-6">
+            <h4 className="mb-4 text-sm font-semibold">On this page</h4>
+            <nav className="space-y-2">
+              {tableOfContents.map((item) => (
+                <a
+                  key={item.url}
+                  href={item.url}
+                  className={`block text-sm transition-colors hover:text-foreground ${
+                    activeItem === item.url.slice(1)
+                      ? 'text-foreground font-medium'
+                      : 'text-muted-foreground'
+                  }`}
+                >
+                  {item.title}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>
