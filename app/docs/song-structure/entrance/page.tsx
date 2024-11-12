@@ -4,6 +4,15 @@ import { useState, useEffect } from 'react'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 import Script from 'next/script'
 
 interface LyricSection {
@@ -47,6 +56,42 @@ const lyrics: LyricData[] = [
     ],
     category: "Inspirational",
   },
+  {
+    id: 4,
+    title: "Red Carpet Moment",
+    sections: [
+      { type: 'verse', content: "Flashbulbs pop, the crowd goes wild,\nYour name in lights, fame reconciled.\nStrut your stuff, own the night,\nRed carpet rolled, future's bright." },
+      { type: 'chorus', content: "This is your red carpet moment,\nGlamour and glitz, wholly owned.\nCameras flash, capture the scene,\nYou're the star of this dream." },
+    ],
+    category: "Performance",
+  },
+  {
+    id: 5,
+    title: "First Day of School",
+    sections: [
+      { type: 'verse', content: "Backpack ready, lunchbox packed,\nLittle steps, a world to be cracked.\nClassroom door, a portal new,\nFriends to make, knowledge to accrue." },
+      { type: 'chorus', content: "First day jitters, butterflies dance,\nBut every step's a new chance.\nSchool bells ring, adventures start,\nLearning's journey captures the heart." },
+    ],
+    category: "Personal",
+  },
+  {
+    id: 6,
+    title: "Nature's Welcome",
+    sections: [
+      { type: 'verse', content: "Forest path, dappled light,\nNature's entrance, a wondrous sight.\nBirdsong greets, leaves whisper low,\nInto the wild, we quietly go." },
+      { type: 'chorus', content: "Step into nature's warm embrace,\nFind your rhythm, find your place.\nEvery sense alive and free,\nWelcome to tranquility." },
+    ],
+    category: "Inspirational",
+  },
+  {
+    id: 7,
+    title: "Digital Frontier",
+    sections: [
+      { type: 'verse', content: "Login prompt, cursor blinks,\nVirtual world, full of links.\nAvatar primed, profile set,\nDigital entrance, no regret." },
+      { type: 'chorus', content: "Enter the realm of ones and zeros,\nWhere data flows and info grows.\nYour digital self takes the stage,\nWelcome to the cyber age." },
+    ],
+    category: "Technology",
+  },
 ]
 
 const categories = ["All", ...Array.from(new Set(lyrics.map(lyric => lyric.category)))]
@@ -55,6 +100,8 @@ export default function EntrancePage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [filteredLyrics, setFilteredLyrics] = useState<LyricData[]>(lyrics)
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 4
 
   useEffect(() => {
     const filtered = lyrics.filter(lyric => 
@@ -62,7 +109,14 @@ export default function EntrancePage() {
       (selectedCategory === 'All' || lyric.category === selectedCategory)
     )
     setFilteredLyrics(filtered)
+    setCurrentPage(1)
   }, [searchTerm, selectedCategory])
+
+  const pageCount = Math.ceil(filteredLyrics.length / itemsPerPage)
+  const paginatedLyrics = filteredLyrics.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
 
   return (
     <>
@@ -117,7 +171,7 @@ export default function EntrancePage() {
         <section aria-label="Lyrics collection">
           <h2 className="sr-only">Lyrics Collection</h2>
           <div className="grid gap-6 md:grid-cols-2">
-            {filteredLyrics.map((lyric) => (
+            {paginatedLyrics.map((lyric) => (
               <Card key={lyric.id}>
                 <CardHeader>
                   <h2 id={`song-${lyric.id}`} className="text-2xl font-semibold">{lyric.title}</h2>
@@ -138,6 +192,45 @@ export default function EntrancePage() {
             ))}
           </div>
         </section>
+
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious 
+                href="#" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setCurrentPage(prev => Math.max(prev - 1, 1));
+                }}
+                aria-disabled={currentPage === 1}
+              />
+            </PaginationItem>
+            {[...Array(pageCount)].map((_, i) => (
+              <PaginationItem key={i}>
+                <PaginationLink 
+                  href="#" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage(i + 1);
+                  }}
+                  isActive={currentPage === i + 1}
+                >
+                  {i + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationNext 
+                href="#" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setCurrentPage(prev => Math.min(prev + 1, pageCount));
+                }}
+                aria-disabled={currentPage === pageCount}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </main>
     </>
   )
