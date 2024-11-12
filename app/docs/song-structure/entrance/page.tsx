@@ -136,23 +136,25 @@ export default function EntrancePage() {
         })}
       </Script>
 
-      <main className="space-y-8">
+      <main className="space-y-8 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold">Entrance Lyrics Examples</h1>
         <p className="text-lg text-muted-foreground">
           This page showcases examples of lyrics about entrances, demonstrating various techniques and structures in songwriting.
         </p>
         
-        <section aria-label="Lyric filters">
+        <section aria-label="Lyric filters" className="w-full">
           <h2 className="sr-only">Lyric Filters</h2>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Input
-              type="search"
-              placeholder="Search lyrics..."
-              className="max-w-sm"
-              aria-label="Search lyrics"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+          <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
+            <div className="w-full sm:w-auto">
+              <Input
+                type="search"
+                placeholder="Search lyrics..."
+                className="w-full"
+                aria-label="Search lyrics"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
             <div className="flex flex-wrap gap-2">
               {categories.map(category => (
                 <Button
@@ -160,6 +162,7 @@ export default function EntrancePage() {
                   variant={selectedCategory === category ? "default" : "outline"}
                   onClick={() => setSelectedCategory(category)}
                   aria-label={`Filter by ${category}`}
+                  className="flex-grow sm:flex-grow-0"
                 >
                   {category}
                 </Button>
@@ -202,7 +205,6 @@ export default function EntrancePage() {
                   e.preventDefault();
                   setCurrentPage(prev => Math.max(prev - 1, 1));
                 }}
-                aria-disabled={currentPage === 1}
               />
             </PaginationItem>
             {[...Array(pageCount)].map((_, i) => (
@@ -226,7 +228,6 @@ export default function EntrancePage() {
                   e.preventDefault();
                   setCurrentPage(prev => Math.min(prev + 1, pageCount));
                 }}
-                aria-disabled={currentPage === pageCount}
               />
             </PaginationItem>
           </PaginationContent>
