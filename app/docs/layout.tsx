@@ -24,6 +24,7 @@ const sidebarItems = [
       { title: "Verses", href: "/docs/song-structure/verses" },
       { title: "Chorus", href: "/docs/song-structure/chorus" },
       { title: "Bridge", href: "/docs/song-structure/bridge" },
+      { title: "Entrance", href: "/docs/song-structure/entrance" },
     ],
   },
   {
@@ -97,12 +98,22 @@ export default function DocsLayout({
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([])
 
   useEffect(() => {
-    const headings = document.querySelectorAll('h2')
-    const items: TableOfContentsItem[] = Array.from(headings).map((heading) => ({
-      title: heading.textContent || '',
-      url: `#${heading.id}`,
-    }))
-    setTableOfContents(items)
+    const generateToc = () => {
+      const headings = document.querySelectorAll('h2:not(.sr-only)')
+      const items: TableOfContentsItem[] = Array.from(headings).map((heading) => ({
+        title: heading.textContent || '',
+        url: `#${heading.id}`,
+      }))
+      setTableOfContents(items)
+    }
+
+    generateToc()
+
+    // Re-generate ToC when filtered lyrics change
+    const observer = new MutationObserver(generateToc)
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    return () => observer.disconnect()
   }, [pathname])
 
   const activeItem = useActiveItem(tableOfContents.map((item) => item.url.slice(1)))
@@ -126,7 +137,7 @@ export default function DocsLayout({
     const targetId = href.replace('#', '')
     const targetElement = document.getElementById(targetId)
     if (targetElement) {
-      const headerOffset = 80 // Adjust this value based on your header height
+      const headerOffset = 100 // Adjust this value based on your header height and desired offset
       const elementPosition = targetElement.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset
 
