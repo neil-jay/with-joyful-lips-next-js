@@ -15,15 +15,6 @@ export function Footer() {
             >
               Your Name
             </a>
-            . Hosted on{' '}
-            <a
-              href="https://vercel.com"
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium underline underline-offset-4"
-            >
-              Vercel
-            </a>
             .
           </p>
         </div>

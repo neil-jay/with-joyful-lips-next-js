@@ -7,16 +7,16 @@ export function Header() {
       <div className="container flex h-14 items-center">
         <Link href="/" className="flex items-center space-x-2">
           <Music className="h-6 w-6" />
-          <span className="font-bold">Lyrics Docs</span>
+          <span className="font-bold hidden sm:inline-block">Lyrics Docs</span>
         </Link>
         <nav className="ml-auto flex items-center space-x-4">
           <Link href="/docs/introduction" className="text-sm font-medium transition-colors hover:text-primary">
             Docs
           </Link>
-          <Link href="/about" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="/about" className="text-sm font-medium transition-colors hover:text-primary hidden sm:inline-block">
             About
           </Link>
-          <Link href="/contact" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="/contact" className="text-sm font-medium transition-colors hover:text-primary hidden sm:inline-block">
             Contact
           </Link>
         </nav>

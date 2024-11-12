@@ -1,10 +1,13 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
+import { Menu, X } from 'lucide-react'
 
 const sidebarItems = [
   {
@@ -50,13 +53,29 @@ export default function DocsLayout({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+      if (window.innerWidth >= 768) {
+        setSidebarOpen(true)
+      }
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
       <div className="flex flex-1">
-        <aside className="w-64 border-r bg-background">
-          <div className="sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto p-4">
+        <aside className={`${sidebarOpen ? 'block' : 'hidden'} md:block fixed md:sticky top-14 z-30 h-[calc(100vh-3.5rem)] w-64 overflow-y-auto border-r bg-background transition-all duration-300`}>
+          <div className="p-4">
             <div className="relative mb-4">
               <span className="absolute left-2.5 top-2.5 text-muted-foreground">🔍</span>
               <Input
@@ -80,6 +99,7 @@ export default function DocsLayout({
                         className={`block rounded-md px-2 py-1 text-sm transition-colors hover:bg-muted ${
                           pathname === item.href ? 'bg-muted font-medium text-foreground' : 'text-foreground/70'
                         }`}
+                        onClick={() => isMobile && setSidebarOpen(false)}
                       >
                         {item.title}
                       </Link>
@@ -90,8 +110,19 @@ export default function DocsLayout({
             </nav>
           </div>
         </aside>
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto md:ml-64">
           <div className="container max-w-3xl py-6 lg:py-10">
+            {isMobile && (
+              <Button
+                onClick={toggleSidebar}
+                className="mb-4 md:hidden"
+                variant="outline"
+                size="icon"
+              >
+                {sidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+                <span className="sr-only">Toggle Sidebar</span>
+              </Button>
+            )}
             {children}
           </div>
         </main>
