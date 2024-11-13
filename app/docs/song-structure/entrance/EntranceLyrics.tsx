@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import {
   Pagination,
   PaginationContent,
@@ -14,12 +13,14 @@ import {
 } from "@/components/ui/pagination"
 import { useInView } from 'react-intersection-observer'
 import { LyricData } from './lyricsData'
+import { LyricCard } from './LyricCard'
 
 export default function EntranceLyrics({ initialLyrics, allLyrics }: { initialLyrics: LyricData[], allLyrics: LyricData[] }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [filteredLyrics, setFilteredLyrics] = useState<LyricData[]>(initialLyrics)
   const [currentPage, setCurrentPage] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
   const itemsPerPage = 4
 
   const { ref, inView } = useInView({
@@ -37,12 +38,14 @@ export default function EntranceLyrics({ initialLyrics, allLyrics }: { initialLy
   }, [inView, filteredLyrics.length, allLyrics])
 
   useEffect(() => {
+    setIsLoading(true)
     const filtered = allLyrics.filter(lyric => 
       lyric.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (selectedCategory === 'All' || lyric.category === selectedCategory)
     )
     setFilteredLyrics(filtered)
     setCurrentPage(1)
+    setIsLoading(false)
   }, [searchTerm, selectedCategory, allLyrics])
 
   const pageCount = Math.ceil(filteredLyrics.length / itemsPerPage)
@@ -87,29 +90,15 @@ export default function EntranceLyrics({ initialLyrics, allLyrics }: { initialLy
       
       <section aria-label="Lyrics collection">
         <h2 className="sr-only">Lyrics Collection</h2>
-        <div className="grid gap-6 sm:grid-cols-2">
-          {paginatedLyrics.map((lyric) => (
-            <article key={`lyric-${lyric.id}`} className="rounded-lg border bg-card text-card-foreground shadow-sm">
-              <Card>
-                <CardHeader>
-                  <h2 id={`song-title-${lyric.id}`} className="text-xl sm:text-2xl font-semibold">{lyric.title}</h2>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {lyric.sections.map((section, index) => (
-                      <div key={`${lyric.id}-${index}`}>
-                        <h3 className="text-base sm:text-lg font-semibold capitalize">{section.type}</h3>
-                        <p className={`whitespace-pre-line text-sm sm:text-base ${section.type === 'chorus' ? 'italic' : ''}`}>
-                          {section.content}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </article>
-          ))}
-        </div>
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2">
+            {paginatedLyrics.map((lyric) => (
+              <LyricCard key={`lyric-${lyric.id}`} lyric={lyric} />
+            ))}
+          </div>
+        )}
       </section>
 
       <nav aria-label="Pagination" className="mt-8">
