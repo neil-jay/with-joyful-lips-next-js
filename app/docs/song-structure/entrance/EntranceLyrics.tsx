@@ -4,6 +4,14 @@ import { useState, useEffect } from 'react'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 import { useInView } from 'react-intersection-observer'
 import { LyricData } from './lyricsData'
 
@@ -33,17 +41,16 @@ export default function EntranceLyrics({ initialLyrics, allLyrics }: { initialLy
       lyric.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (selectedCategory === 'All' || lyric.category === selectedCategory)
     )
-    setFilteredLyrics(filtered.slice(0, itemsPerPage))
+    setFilteredLyrics(filtered)
     setCurrentPage(1)
   }, [searchTerm, selectedCategory, allLyrics])
 
-  const paginatedLyrics = filteredLyrics.slice(0, currentPage * itemsPerPage)
+  const pageCount = Math.ceil(filteredLyrics.length / itemsPerPage)
+  const paginatedLyrics = filteredLyrics.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
-  const loadMore = () => {
-    const nextPage = currentPage + 1
-    const moreData = allLyrics.slice(paginatedLyrics.length, nextPage * itemsPerPage)
-    setFilteredLyrics(prev => [...prev, ...moreData])
-    setCurrentPage(nextPage)
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    window.scrollTo(0, 0)
   }
 
   return (
@@ -82,15 +89,15 @@ export default function EntranceLyrics({ initialLyrics, allLyrics }: { initialLy
         <h2 className="sr-only">Lyrics Collection</h2>
         <div className="grid gap-6 sm:grid-cols-2">
           {paginatedLyrics.map((lyric) => (
-            <article key={lyric.id} className="rounded-lg border bg-card text-card-foreground shadow-sm">
+            <article key={`lyric-${lyric.id}`} className="rounded-lg border bg-card text-card-foreground shadow-sm">
               <Card>
                 <CardHeader>
-                  <h2 id={`song-${lyric.id}`} className="text-xl sm:text-2xl font-semibold">{lyric.title}</h2>
+                  <h2 id={`song-title-${lyric.id}`} className="text-xl sm:text-2xl font-semibold">{lyric.title}</h2>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {lyric.sections.map((section, index) => (
-                      <div key={index}>
+                      <div key={`${lyric.id}-${index}`}>
                         <h3 className="text-base sm:text-lg font-semibold capitalize">{section.type}</h3>
                         <p className={`whitespace-pre-line text-sm sm:text-base ${section.type === 'chorus' ? 'italic' : ''}`}>
                           {section.content}
@@ -103,14 +110,49 @@ export default function EntranceLyrics({ initialLyrics, allLyrics }: { initialLy
             </article>
           ))}
         </div>
-        {filteredLyrics.length < allLyrics.length && (
-          <div ref={ref} className="mt-8 text-center">
-            <Button onClick={loadMore} className="px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90">
-              Load More
-            </Button>
-          </div>
-        )}
       </section>
+
+      <nav aria-label="Pagination" className="mt-8">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious 
+                href="#" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePageChange(Math.max(currentPage - 1, 1));
+                }}
+                aria-disabled={currentPage === 1}
+              />
+            </PaginationItem>
+            {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
+              <PaginationItem key={`page-${page}`} className="hidden sm:inline-block">
+                <PaginationLink 
+                  href="#" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePageChange(page);
+                  }}
+                  isActive={currentPage === page}
+                  aria-current={currentPage === page ? "page" : undefined}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationNext 
+                href="#" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePageChange(Math.min(currentPage + 1, pageCount));
+                }}
+                aria-disabled={currentPage === pageCount}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </nav>
     </>
   )
 }
