@@ -130,6 +130,7 @@ export default function EntrancePage() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://yourdomain.com/docs/song-structure/entrance" />
         <link rel="canonical" href="https://yourdomain.com/docs/song-structure/entrance" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <Script id="lyrics-schema" type="application/ld+json">
@@ -149,17 +150,17 @@ export default function EntrancePage() {
         })}
       </Script>
 
-      <main className="space-y-8 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold">Entrance Lyrics Examples</h1>
-        <p className="text-lg text-muted-foreground">
+      <main className="space-y-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <h1 className="text-2xl sm:text-3xl font-bold mt-4">Entrance Lyrics Examples</h1>
+        <p className="text-base sm:text-lg text-muted-foreground">
           This page showcases examples of lyrics about entrances, demonstrating various techniques and structures in songwriting.
         </p>
         
-        <nav aria-label="Breadcrumb">
-          <ol className="flex space-x-2 text-sm text-muted-foreground">
-            <li><Link href="/docs">Docs</Link></li>
+        <nav aria-label="Breadcrumb" className="text-sm">
+          <ol className="flex flex-wrap space-x-2 text-muted-foreground">
+            <li><Link href="/docs" className="hover:text-primary">Docs</Link></li>
             <li>&gt;</li>
-            <li><Link href="/docs/song-structure">Song Structure</Link></li>
+            <li><Link href="/docs/song-structure" className="hover:text-primary">Song Structure</Link></li>
             <li>&gt;</li>
             <li aria-current="page">Entrance</li>
           </ol>
@@ -167,8 +168,8 @@ export default function EntrancePage() {
         
         <section aria-label="Lyric filters" className="w-full">
           <h2 className="sr-only">Lyric Filters</h2>
-          <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
-            <div className="w-full sm:w-auto">
+          <div className="flex flex-col space-y-4">
+            <div className="w-full">
               <Input
                 type="search"
                 placeholder="Search lyrics..."
@@ -185,7 +186,8 @@ export default function EntrancePage() {
                   variant={selectedCategory === category ? "default" : "outline"}
                   onClick={() => setSelectedCategory(category)}
                   aria-pressed={selectedCategory === category}
-                  className="flex-grow sm:flex-grow-0"
+                  className="flex-grow sm:flex-grow-0 text-sm"
+                  size="sm"
                 >
                   {category}
                 </Button>
@@ -196,19 +198,19 @@ export default function EntrancePage() {
         
         <section aria-label="Lyrics collection">
           <h2 className="sr-only">Lyrics Collection</h2>
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2">
             {paginatedLyrics.map((lyric) => (
               <article key={lyric.id} className="rounded-lg border bg-card text-card-foreground shadow-sm">
                 <Card>
                   <CardHeader>
-                    <h2 id={`song-${lyric.id}`} className="text-2xl font-semibold">{lyric.title}</h2>
+                    <h2 id={`song-${lyric.id}`} className="text-xl sm:text-2xl font-semibold">{lyric.title}</h2>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       {lyric.sections.map((section, index) => (
                         <div key={index}>
-                          <h3 className="text-lg font-semibold capitalize">{section.type}</h3>
-                          <p className={`whitespace-pre-line ${section.type === 'chorus' ? 'italic' : ''}`}>
+                          <h3 className="text-base sm:text-lg font-semibold capitalize">{section.type}</h3>
+                          <p className={`whitespace-pre-line text-sm sm:text-base ${section.type === 'chorus' ? 'italic' : ''}`}>
                             {section.content}
                           </p>
                         </div>
@@ -221,7 +223,7 @@ export default function EntrancePage() {
           </div>
         </section>
 
-        <nav aria-label="Pagination">
+        <nav aria-label="Pagination" className="mt-8">
           <Pagination>
             <PaginationContent>
               <PaginationItem>
@@ -235,7 +237,7 @@ export default function EntrancePage() {
                 />
               </PaginationItem>
               {[...Array(pageCount)].map((_, i) => (
-                <PaginationItem key={i}>
+                <PaginationItem key={i} className="hidden sm:inline-block">
                   <PaginationLink 
                     href="#" 
                     onClick={(e) => {
