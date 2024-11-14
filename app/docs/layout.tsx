@@ -14,37 +14,23 @@ const sidebarItems = [
     icon: "📚",
     items: [
       { title: "Introduction", href: "/docs/introduction" },
-      { title: "Installation", href: "/docs/installation" },
     ],
   },
   {
     title: "Song Structure",
     icon: "🎵",
     items: [
-      { title: "Verses", href: "/docs/song-structure/verses" },
-      { title: "Chorus", href: "/docs/song-structure/chorus" },
-      { title: "Bridge", href: "/docs/song-structure/bridge" },
       { title: "Entrance", href: "/docs/song-structure/entrance" },
     ],
   },
-  {
-    title: "Lyric Writing",
-    icon: "🎤",
-    items: [
-      { title: "Rhyme Schemes", href: "/docs/lyric-writing/rhyme-schemes" },
-      { title: "Metaphors", href: "/docs/lyric-writing/metaphors" },
-      { title: "Storytelling", href: "/docs/lyric-writing/storytelling" },
-    ],
-  },
-  {
-    title: "Advanced Techniques",
-    icon: "⚙️",
-    items: [
-      { title: "Wordplay", href: "/docs/advanced-techniques/wordplay" },
-      { title: "Alliteration", href: "/docs/advanced-techniques/alliteration" },
-      { title: "Assonance", href: "/docs/advanced-techniques/assonance" },
-    ],
-  },
+  // {
+  //   title: "Legal",
+  //   icon: "🎤",
+  //   items: [
+  //     { title: "Terms of Service", href: "/docs/lyric-writing/terms" },
+  //     { title: "Copyright", href: "/docs/lyric-writing/copyright" },
+  //   ],
+  // },
 ]
 
 interface TableOfContentsItem {
