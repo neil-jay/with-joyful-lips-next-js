@@ -13,14 +13,14 @@ const sidebarItems = [
     title: "Getting Started",
     icon: "📚",
     items: [
-      { title: "Introduction", href: "/docs/introduction" },
+      { title: "Introduction", href: "/lyrics/introduction" },
     ],
   },
   {
     title: "Song Structure",
     icon: "🎵",
     items: [
-      { title: "Entrance", href: "/docs/song-structure/entrance" },
+      { title: "Entrance", href: "/lyrics/with-joyful-lips/entrance-hymns" },
     ],
   },
   // {
