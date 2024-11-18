@@ -17,7 +17,7 @@ export const lyrics: LyricData[] = [
     sections: [
       { type: 'chorus', content: "Make your entrance, take the stage,\nYour presence sets the world ablaze.\nEvery eye is fixed on you,\nThis is your moment, shining through." },
       { type: 'verse', content: "Lights dim, anticipation grows,\nThe crowd hushes, excitement flows.\nA silhouette behind the curtain,\nThe moment's arrival is certain." },
-      { type: 'chorus', content: "Make your entrance, take the stage,\nYour presence sets the world ablaze.\nEvery eye is fixed on you,\nThis is your moment, shining through." },
+      { type: 'chorus', content: "TEst it titsgfgdsgfe,\nYour presence sets the world ablaze.\nEvery eye is fixed on you,\nThis is your moment, shining through." },
     ],
     category: "Performance",
   },
