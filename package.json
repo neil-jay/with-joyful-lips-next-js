@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "semantic-release": "semantic-release"
   },
   "keywords": [
     "lyrics",
@@ -21,6 +22,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cross-spawn": "^7.0.5",
     "lucide-react": "^0.279.0",
     "next": "^15.0.3",
     "next-themes": "^0.4.3",
@@ -31,9 +33,12 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "@types/node": "22.9.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
+    "semantic-release": "^24.2.0",
     "tailwindcss": "^3.4.14",
     "typescript": "5.6.3"
   }

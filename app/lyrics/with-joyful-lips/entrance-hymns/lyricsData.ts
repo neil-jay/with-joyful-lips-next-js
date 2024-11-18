@@ -13,8 +13,9 @@ export interface LyricData {
 export const lyrics: LyricData[] = [
   {
     id: 1,
-    title: "Grand Entrance",
+    title: "A.1 Joy was in my heart",
     sections: [
+      { type: 'chorus', content: "Make your entrance, take the stage,\nYour presence sets the world ablaze.\nEvery eye is fixed on you,\nThis is your moment, shining through." },
       { type: 'verse', content: "Lights dim, anticipation grows,\nThe crowd hushes, excitement flows.\nA silhouette behind the curtain,\nThe moment's arrival is certain." },
       { type: 'chorus', content: "Make your entrance, take the stage,\nYour presence sets the world ablaze.\nEvery eye is fixed on you,\nThis is your moment, shining through." },
     ],

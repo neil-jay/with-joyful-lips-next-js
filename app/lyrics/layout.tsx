@@ -20,7 +20,7 @@ const sidebarItems = [
     title: "Song Structure",
     icon: "🎵",
     items: [
-      { title: "Entrance", href: "/lyrics/with-joyful-lips/entrance-hymns" },
+      { title: "Entrance Hymns", href: "/lyrics/with-joyful-lips/entrance-hymns" },
     ],
   },
   // {
